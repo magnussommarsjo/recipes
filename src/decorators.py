@@ -42,6 +42,15 @@ def decorator_with_type_annotations_v2(func: Callable[P, T]) -> Callable[P, T]:
         return value
     return wrapper
 
+def decorator_with_arguments(statement: str) -> Callable[[Callable[P, T]], Callable[P, T]]:
+    """Decorator with arguments"""
+    def decorator(func: Callable[P, T]) -> Callable[P, T]:
+        @wraps(func)
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+            print(statement)
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 if __name__ == "__main__":
     @basic_decorator
